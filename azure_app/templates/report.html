@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard</title>
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+      }
+      .chartMenu {
+        position: relative;
+        top: 100px;
+        margin: auto;
+        border-radius: 25px;
+        width: 30%;
+        height: 40px;
+        background: #353030a0;
+        color: rgb(255, 255, 255);
+      }
+      .chartMenu p {
+        font-family: 'Lato';
+        padding: 10px;
+        font-size: 20px;
+        text-align: center;
+      }
+      .chartCard {
+        width: 100vw;
+        height: calc(100vh - 40px);
+        background: rgba(54, 162, 235, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .chartBox {
+        width: 700px;
+        padding: 20px;
+        margin: 50px;
+        border-radius: 20px;
+        border: solid 3px rgba(54, 162, 235, 1);
+        background: white;
+      }
+
+      .headerColor {
+        background-color: rgba(54, 162, 235, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <header class="headerColor">
+      <div class="chartMenu">
+        <p>Sentiment Analysis Report of r/{{ name }}</p>
+      </div>
+    </header>
+
+    <div class="chartCard">
+      <div class="chartBox">
+        <canvas id="myChartPie"></canvas>
+      </div>
+      <div class="chartBox">
+        <canvas id="myChartBar"></canvas>
+      </div>
+    </div>
+
+    <footer class="footer bg-light">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
+                  <p class="text-muted small mb-4 mb-lg-0">&copy; Janne Seppälä</p>
+              </div>
+              <div class="col-lg-6 h-100 text-center text-lg-end my-auto">
+                  <ul class="list-inline mb-0">
+                      <li class="list-inline-item me-4">
+                          <a href="https://github.com/jamsep/Subreddit_Sentimental_Analysis"><i class="bi bi-github"></i></a>
+                      </li>
+                      <li class="list-inline-item me-4">
+                          <a href="https://www.linkedin.com/in/janne-sepp%C3%A4l%C3%A4-b7a11822b/"><i class="bi bi-linkedin"></i></a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </footer>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
+    <script>
+
+
+    // setup 
+    data1 = {
+        labels: {{ sentiment_labels | safe }},
+        datasets: [{
+          label: 'Sentiment Analysis of r/{{ name }}',
+          data: {{ sentiment_data | safe }},
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)'
+          ],
+          hoverOffset: 4
+        }]
+      };
+       
+      const config1 = {
+        type: 'doughnut',
+        data: data1,
+      };
+  
+      const data2 = {
+        labels: {{ fdist_labels | safe }},
+        datasets: [{
+          label: 'Top 10 most frequently used words in hot',
+          data: {{ fdist_data | safe }},
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 205, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(201, 203, 207, 0.2)',
+            'rgba(165, 96, 130, 0.2)',
+            'rgba(42, 58, 88, 0.2)',
+            'rgba(88, 42, 42, 0.2)'
+          ],
+          borderColor: [
+            'rgb(255, 99, 132)',
+            'rgb(255, 159, 64)',
+            'rgb(255, 205, 86)',
+            'rgb(75, 192, 192)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)',
+            'rgb(201, 203, 207)',
+            'rgb(165, 96, 130)',
+            'rgb(42, 58, 88)',
+            'rgb(88, 42, 42)'
+          ],
+          borderWidth: 1
+        }]
+      };
+  
+  
+      const config2 = {
+        type: 'bar',
+        data: data2,
+        options: {
+          aspectRatio: 1,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        },
+      };
+
+    // render init block
+    const myChartLine = new Chart(
+      document.getElementById('myChartPie'),
+      config1
+    );
+
+    const myChartBar = new Chart(
+        document.getElementById('myChartBar'),
+        config2
+      );
+    </script>
+
+  </body>
+</html>

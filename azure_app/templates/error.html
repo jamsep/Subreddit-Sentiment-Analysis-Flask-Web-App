@@ -1,0 +1,16 @@
+{% extends "index.html" %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <input class="form-control form-control-lg" type="text" name="user_input" placeholder="movies / music / ..." disabled>
+    </div>
+    <div class="col-auto"><button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Submit</button></div>
+</div>
+</div>
+<div id="submitSuccessMessage">
+    <div class="text-center mb-3">
+        <div class="fw-bolder">The subreddit does not exist or is not accessible</div>
+        <p>Redirecting to home page...</p>
+    </div>
+</div>
+{% endblock %}

@@ -16,35 +16,21 @@ def doSentimentReport(user_input):
   import matplotlib.pyplot as plt
   import seaborn as sns
   sns.set(style='darkgrid', context='talk')
+  from dotenv import load_dotenv
+  import os
 
   print("Goes to file correctly", file=sys.stderr)
 
   # In[2]:
 
-  import json
+  load_dotenv()
 
-  CLIENT_ID = ''
-  CLIENT_SECRET = ''
-  USERNAME = ''
-  PASSWORD = ''
-  USER_AGENT = ''
-
-  API_file_path = 'D:/API Keys/Reddit_API.json'
-
-  with open(API_file_path, 'r') as f:
-    keyData = json.load(f)
-    CLIENT_ID = keyData['CLIENT_ID']
-    CLIENT_SECRET = keyData['CLIENT_SECRET']
-    USERNAME = keyData['USERNAME']
-    PASSWORD = keyData['PASSWORD']
-    USER_AGENT = keyData['USER_AGENT']
-
-  CLIENT_ID = CLIENT_ID
-  CLIENT_SECRET = CLIENT_SECRET
-  USERNAME = USERNAME
-  PASSWORD = PASSWORD
-  USER_AGENT = USER_AGENT
-
+  CLIENT_ID = os.getenv('REDDIT_CLIENT_ID')
+  CLIENT_SECRET = os.getenv('REDDIT_CLIENT_SECRET')
+  USERNAME = os.getenv('REDDIT_USERNAME')
+  PASSWORD = os.getenv('REDDIT_PASSWORD')
+  USER_AGENT = os.getenv('REDDIT_USER_AGENT')
+  
   try:
       reddit = praw.Reddit(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, username=USERNAME, password=PASSWORD, user_agent=USER_AGENT)
       print("Authentication Successful")
@@ -56,6 +42,7 @@ def doSentimentReport(user_input):
       PASSWORD = ''
       USER_AGENT = ''
       print("Error: Authentication Failed")
+      return None
 
 
   # In[20]:

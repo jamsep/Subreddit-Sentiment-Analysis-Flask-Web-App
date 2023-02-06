@@ -3,14 +3,16 @@ from flask import Flask, request, redirect, render_template, session, url_for
 from static import Subreddit_Sentiment_Analysis_Report as ssar
 import pandas as pd
 import numpy as np
-
 import sys
+
 
 app = Flask(__name__)
 app.secret_key = 'secret-omg'
 
 report_list = []
 subreddit_name = ''
+
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -25,9 +27,6 @@ def index():
     subreddit = session.get('subreddit', None)
     session['subreddit'] = None
     return render_template('index.html')
-
-
-@app.route('/loading/<user_input>')
 
 @app.route('/processing/<user_input>', methods=['GET', 'POST'])
 def processing(user_input):
@@ -61,7 +60,7 @@ def report():
 
 @app.route('/error/')
 def error():
-    return render_template('error.html'), {"Refresh": "5; url=/"}
+    return render_template('error.html', subreddit_name=subreddit_name), {"Refresh": "5; url=/"}
 
 
 

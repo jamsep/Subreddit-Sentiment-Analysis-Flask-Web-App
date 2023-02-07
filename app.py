@@ -18,6 +18,8 @@ subreddit_name = ''
 def index():
     if request.method == 'POST':
         user_input = request.form.get('user_input')
+        if user_input == '':
+            return redirect('/')
         subreddit = user_input
         session['subreddit'] = subreddit
         global subreddit_name

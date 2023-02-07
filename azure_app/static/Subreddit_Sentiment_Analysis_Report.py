@@ -27,19 +27,15 @@ def doSentimentReport(user_input):
 
   CLIENT_ID = os.getenv('REDDIT_CLIENT_ID')
   CLIENT_SECRET = os.getenv('REDDIT_CLIENT_SECRET')
-  USERNAME = os.getenv('REDDIT_USERNAME')
-  PASSWORD = os.getenv('REDDIT_PASSWORD')
   USER_AGENT = os.getenv('REDDIT_USER_AGENT')
   
   try:
-      reddit = praw.Reddit(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, username=USERNAME, password=PASSWORD, user_agent=USER_AGENT)
+      reddit = praw.Reddit(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, user_agent=USER_AGENT)
       print("Authentication Successful")
   except:
       # reset all credentials
       CLIENT_ID = ''
       CLIENT_SECRET = ''
-      USERNAME = ''
-      PASSWORD = ''
       USER_AGENT = ''
       print("Error: Authentication Failed")
       return None

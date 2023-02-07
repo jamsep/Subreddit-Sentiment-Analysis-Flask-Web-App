@@ -46,7 +46,7 @@ def doSentimentReport(user_input):
   input_subreddit = user_input
 
   # analyze movies subreddit
-  subreddit = reddit.subreddit(input_subreddit).hot(limit=100)
+  subreddit = reddit.subreddit(input_subreddit).hot(limit=50)
 
 
   # In[21]:
@@ -89,21 +89,20 @@ def doSentimentReport(user_input):
     submission = reddit.submission(id=post_id)
 
     # take all comments of each submission
-    submission.comments.replace_more(limit=5)
+    submission.comments.replace_more(limit=1)
     for submission_comment in submission.comments:
 
       comment_text = f"{comment_text} {submission_comment.body}"
 
       all_comments.append(submission_comment.body)
-      ID.append(post_id)
     
     post_comments.append(comment_text)
 
   # creating a new dataframe of the comments
   df_comments = pd.DataFrame(post_comments, columns=['comment'])
 
-  data_tuple = list(zip(all_comments, ID))
-  df_all_comments = pd.DataFrame(data_tuple, columns=['comment', 'ID'])
+  data_tuple = list(all_comments)
+  df_all_comments = pd.DataFrame(data_tuple, columns=['comment'])
 
   df_comments
 

@@ -1,0 +1,17 @@
+{% extends "index.html" %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <input class="form-control form-control-lg" type="text" name="user_input" placeholder="subreddit" disabled>
+    </div>
+    <div class="col-auto"><button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Submit</button></div>
+</div>
+</div>
+<div id="submitSuccessMessage">
+    <div class="text-center mb-3">
+        <div class="fw-bolder">AUTHENTICATION TO REDDIT FAILED</div>
+        <p>The ID is: {{ ID }} and the SECRET is: {{ SECRET }}</p>
+        <p>Redirecting to home page...</p>
+    </div>
+</div>
+{% endblock %}

@@ -25,10 +25,16 @@ def doSentimentReport(user_input):
 
   load_dotenv()
 
-  CLIENT_ID = os.getenv('REDDIT_CLIENT_ID')
-  CLIENT_SECRET = os.getenv('REDDIT_CLIENT_SECRET')
+  CLIENT_ID = ""
+  CLIENT_SECRET = ""
   USER_AGENT = os.getenv('REDDIT_USER_AGENT')
-  
+
+  def authenticated(reddit):
+    """Determine whether the given Reddit instance has valid credentials."""
+    if reddit.user.me() == None:
+      return True
+
+
   try:
       reddit = praw.Reddit(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, user_agent=USER_AGENT)
       print("Authentication Successful")
@@ -38,9 +44,10 @@ def doSentimentReport(user_input):
       CLIENT_SECRET = ''
       USER_AGENT = ''
       print("Error: Authentication Failed")
-      return None
+      return (CLIENT_ID, CLIENT_SECRET, -1)
 
-
+  if authenticated(reddit):
+    return (CLIENT_ID, CLIENT_SECRET, -1)
   # In[20]:
 
   input_subreddit = user_input

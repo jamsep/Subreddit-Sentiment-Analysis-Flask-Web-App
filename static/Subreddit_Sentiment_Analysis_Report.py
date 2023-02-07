@@ -46,7 +46,7 @@ def doSentimentReport(user_input):
   input_subreddit = user_input
 
   # analyze movies subreddit
-  subreddit = reddit.subreddit(input_subreddit).hot(limit=50)
+  subreddit = reddit.subreddit(input_subreddit).hot(limit=20)
 
 
   # In[21]:

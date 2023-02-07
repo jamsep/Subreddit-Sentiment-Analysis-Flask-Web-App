@@ -11,10 +11,6 @@ app.secret_key = 'secret-omg'
 
 report_list = []
 subreddit_name = ''
-ID = ''
-SECRET = ''
-
-
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -41,11 +37,6 @@ def processing(user_input):
         if subreddit_report == None:
             return redirect(url_for('error'))
         elif type(subreddit_report) is tuple:
-            print("BAD AUTHENTICATION", file=sys.stdout)
-            global ID
-            global SECRET
-            ID = subreddit_report[0]
-            SECRET = subreddit_report[1]
             return redirect(url_for('authenticationFailed'))
         else:
             report_list = subreddit_report
@@ -75,7 +66,7 @@ def error():
 
 @app.route('/authentication-failed/')
 def authenticationFailed():
-    return render_template('failed.html', ID=ID, SECRET=SECRET), {"Refresh": "5; url=/"}
+    return render_template('failed.html'), {"Refresh": "5; url=/"}
 
 
 def clean_data():
